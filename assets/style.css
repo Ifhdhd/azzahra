@@ -1,0 +1,58 @@
+
+:root{
+  --bg:#0b0b0b; --card:#120707; --accent:#b71c1c; --muted:#bdbdbd;
+  --glass: rgba(255,255,255,0.04);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#070606,#0b0b0b);color:#e9e9e9;}
+
+/* Layout */
+.app{display:flex;min-height:100vh;}
+.sidebar{width:220px;background:linear-gradient(180deg,#0f0b0b,#160909);padding:18px;box-shadow:2px 0 24px rgba(0,0,0,0.6);position:fixed;height:100vh;}
+.brand{font-weight:800;color:#fff;margin-bottom:12px;}
+.nav{display:flex;flex-direction:column;gap:8px}
+.nav-btn{background:transparent;border:1px solid rgba(255,255,255,0.03);padding:10px;border-radius:10px;color:var(--muted);cursor:pointer;text-align:left}
+.nav-btn:hover{background:rgba(255,255,255,0.02);color:#fff}
+.nav-btn.danger{background:linear-gradient(90deg,#d32f2f,#b71c1c);color:#fff;border:none}
+
+/* main */
+.main{margin-left:240px;flex:1;padding:20px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 6px;background:transparent}
+.hamburger{display:none;background:transparent;border:none;font-size:20px;color:#fff;padding:8px 10px;border-radius:8px}
+
+/* panels */
+.panel{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:14px;border-radius:12px;margin-bottom:14px;border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px);box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+.glass{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);}
+
+/* inputs/buttons */
+input{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+.btn{background:linear-gradient(90deg,var(--accent),#d32f2f);color:white;padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
+/* table premium */
+.table-wrap{overflow:auto;border-radius:12px}
+.table{width:100%;border-collapse:collapse;min-width:900px}
+.table thead th{position:sticky;top:0;padding:12px 14px;background:linear-gradient(90deg,#3a0d0d,#6a1212);color:white;font-weight:700;text-align:left}
+.table tbody td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.03);background:linear-gradient(90deg, rgba(255,255,255,0.00), rgba(255,255,255,0.01))}
+.table tbody tr:hover td{background:linear-gradient(90deg, rgba(211,47,47,0.04), rgba(255,255,255,0.01));transform:translateY(-1px)}
+
+/* modal */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:2000}
+.modal.show{display:flex}
+.modal-card{width:94%;max-width:520px;padding:18px;border-radius:16px;background:rgba(255,255,255,0.04);backdrop-filter: blur(18px) saturate(160%);box-shadow:0 20px 60px rgba(183,28,28,0.45);border:1px solid rgba(255,255,255,0.12)}
+
+/* drawer overlay mobile */
+.drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1500}
+
+/* responsive */
+@media (max-width:900px){
+  .sidebar{display:none}
+  .main{margin-left:0;padding:12px}
+  .hamburger{display:inline-block}
+  .drawer-overlay.show{display:block}
+  .table{min-width:640px}
+}
+.small{font-size:13px;color:var(--muted)}
+.row{display:flex;gap:8px}
+.field{margin-top:8px}
+.actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
