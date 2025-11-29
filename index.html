@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Firebase Admin — Hybrid Panel</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="assets/style.css">
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</head>
+<body>
+<div id="app" class="app">
+
+  <!-- Sidebar for desktop / Drawer for mobile -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">FB Admin</div>
+    <nav class="nav">
+      <button class="nav-btn" onclick="focusConfig()">Konfigurasi</button>
+      <button class="nav-btn" onclick="loadData()">Refresh</button>
+      <button class="nav-btn" onclick="openMultiEdit()">Edit Terpilih</button>
+      <button class="nav-btn danger" onclick="deleteSelected()">Hapus Terpilih</button>
+      <button class="nav-btn" onclick="exportSelected()">Export (.json)</button>
+    </nav>
+    <div class="sidebar-foot small">Theme: Red Dark • Hybrid</div>
+  </aside>
+
+  <!-- main content -->
+  <main class="main">
+    <header class="topbar">
+      <button class="hamburger" id="hamburger" onclick="toggleDrawer()">☰</button>
+      <div class="title">Firebase Admin — Hybrid Panel</div>
+      <div class="actions">
+        <div id="userCount" class="small">Users: 0</div>
+        <button class="icon" title="Refresh" onclick="loadData()">⟳</button>
+      </div>
+    </header>
+
+    <section class="container">
+      <div class="panel glass">
+        <h3>Konfigurasi Database</h3>
+        <div class="row">
+          <input id="dbUrl" placeholder="Database URL (kosong - isi manual)">
+          <input id="dbSecret" placeholder="Database Secret (kosong - tidak disimpan)">
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <button class="btn" onclick="saveConfig()">Simpan URL</button>
+          <button class="btn ghost" onclick="clearConfig()">Reset</button>
+        </div>
+        <div class="small muted">Catatan: Secret tidak disimpan. Pilih opsi B.</div>
+      </div>
+
+      <div class="panel glass">
+        <h3>Pencarian & Aksi</h3>
+        <div class="row">
+          <input id="search" placeholder="Cari device id / username" oninput="renderData()">
+          <button class="btn" onclick="loadData()">Refresh</button>
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <button class="btn" onclick="openMultiEdit()">Tambah / Edit Terpilih</button>
+          <button class="btn danger" onclick="deleteSelected()">Hapus Terpilih</button>
+        </div>
+      </div>
+
+      <div class="panel glass table-panel">
+        <div class="table-header">
+          <div style="font-weight:700;">Daftar Users</div>
+          <div class="small">Total: <span id="totalCount">0</span></div>
+        </div>
+        <div class="table-wrap">
+          <table id="dataTable" class="table" aria-live="polite">
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="checkAll" onclick="toggleAll(this)"></th>
+                <th>Index</th>
+                <th>Device Id</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Expiry</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="dataBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Drawer overlay for mobile -->
+<div id="drawerOverlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
+
+<!-- Modal: Multi Edit / Add -->
+<div id="modal" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <h3 id="modalTitle">Edit User</h3>
+    <div class="field"><label>Device ID</label><input id="device_id"></div>
+    <div class="field"><label>Username</label><input id="username"></div>
+    <div class="field"><label>Password</label><input id="password"></div>
+    <div class="field"><label>Expiry (yyyy-mm-dd)</label><input id="expiry"></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="closeModal()">Batal</button>
+      <button class="btn" onclick="saveUser()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Multi Edit fields -->
+<div id="multiModal" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <h3>Edit Massal</h3>
+    <div class="field"><label>Username (kosong = tidak ubah)</label><input id="multi_username"></div>
+    <div class="field"><label>Password (kosong = tidak ubah)</label><input id="multi_password"></div>
+    <div class="field"><label>Expiry (kosong = tidak ubah)</label><input id="multi_expiry"></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="closeMulti()">Batal</button>
+      <button class="btn" onclick="applyMultiEdit()">Simpan Perubahan</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
